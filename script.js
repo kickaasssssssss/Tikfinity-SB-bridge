@@ -117,7 +117,7 @@ function connectTikFinity() {
           sbClient.executeCodeTrigger("tikfinity.follow", follow);
           break;
         }
-
+        
         case "member": {
           const member = data.data;
           console.log(`${member.nickname || member.uniqueId} join!`);
@@ -139,6 +139,13 @@ function connectTikFinity() {
           break;
         }
 
+          case "roomUser": {
+          const room = data.data;
+          console.log(`Theres ${room.viewerCount} total user`);
+          sbClient.executeCodeTrigger("tikfinity.room", room);
+          break;
+        }
+          
         case "share": {
           const share = data.data;
           console.log(`${share.nickname || share.uniqueId} shared the stream!`);
