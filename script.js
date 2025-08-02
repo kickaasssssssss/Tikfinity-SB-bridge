@@ -145,6 +145,13 @@ function connectTikFinity() {
           sbClient.executeCodeTrigger("tikfinity.room", room);
           break;
         }
+
+          case "roomInfo": {
+          const roomInfo = data.data;
+          console.log(`Stream started timestamp: ${roomInfo.create_time}`);
+          sbClient.executeCodeTrigger("tikfinity.roomInfo", roomInfo);
+          break;
+        }
           
         case "share": {
           const share = data.data;
