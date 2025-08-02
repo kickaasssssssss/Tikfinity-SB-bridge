@@ -188,6 +188,13 @@ function connectTikFinity() {
           break;
         }
 
+          case "pollMessage": {
+          const poll = data.data;
+          console.log('Poll ongoing');
+          sbClient.executeCodeTrigger("tikfinity.pollMessage", pollMessage);
+          break;
+        }
+          
         case "streamEnd": {
           const streamEnd = data.data;
           console.log('Stream Ended.');
