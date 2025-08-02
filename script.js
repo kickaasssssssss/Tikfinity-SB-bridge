@@ -189,7 +189,7 @@ function connectTikFinity() {
         }
 
           case "pollMessage": {
-          const poll = data.data;
+          const pollMessage = data.data;
           console.log('Poll ongoing');
           sbClient.executeCodeTrigger("tikfinity.pollMessage", pollMessage);
           break;
