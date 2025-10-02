@@ -81,20 +81,27 @@ function connectTikFinity() {
 
   socket.onopen = () => {
     if (!tikfinityConnected) {
-      tikfinityConnected = true;
-      console.log("✅ Connected to TikFinity");
-      showSuccess("tikfinity");
+        tikfinityConnected = true;
+        console.log("✅ Connected to TikFinity");
+        sbClient.executeCodeTrigger("tikfinity.connected", {
+            connected: true
+        });
+        showSuccess("tikfinity");
     }
-  };
+};
 
-  socket.onclose = () => {
+socket.onclose = () => {
     if (tikfinityConnected) {
-      console.warn("❌ Disconnected from TikFinity");
+        console.warn("❌ Disconnected from TikFinity");
+        sbClient.executeCodeTrigger("tikfinity.disconnected", {
+            connected: false
+        });
     }
     tikfinityConnected = false;
     updateStatusBoxes();
     setTimeout(connectTikFinity, 2000);
-  };
+};
+
 
   socket.onerror = (err) => {
     console.error("TikFinity WebSocket error:", err);
@@ -181,27 +188,6 @@ function connectTikFinity() {
           console.log('A message has been pinned.');
           sbClient.executeCodeTrigger("tikfinity.roomPin", roomPin);
           break;
-        }
-
-        case "connected": {
-          const connected = data.data;
-          if (!tikfinityConnected) {
-          tikfinityConnected = true;
-          console.log("✅ Connected to TikFinity", connected);
-        }
-        sbClient.executeCodeTrigger("tikfinity.connected", connected);
-        break;
-        }
-          
-        case "disconnected": {
-          const disconnected = data.data;
-          if (tikfinityConnected) {
-          console.warn("❌ Disconnected from TikFinity", disconnected);
-          }
-          tikfinityConnected = false;
-          setTimeout(connectTikFinity, 2000);
-        sbClient.executeCodeTrigger("tikfinity.disconnected", disconnected);
-        break;
         }
           
           case "pollMessage": {
