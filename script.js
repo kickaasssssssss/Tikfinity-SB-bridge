@@ -184,20 +184,26 @@ function connectTikFinity() {
         }
 
         case "connected": {
+          const connected = data.data;
+          if (!tikfinityConnected) {
           tikfinityConnected = true;
-          console.log("✅ Connected to TikFinity", data.connected);
-          sbClient.executeCodeTrigger("tikfinity.connected", data.connected);
-          break;
+          console.log("✅ Connected to TikFinity", connected);
+        }
+        sbClient.executeCodeTrigger("tikfinity.connected", connected);
+        break;
         }
           
         case "disconnected": {
+          const disconnected = data.data;
+          if (tikfinityConnected) {
+          console.warn("❌ Disconnected from TikFinity", disconnected);
+          }
           tikfinityConnected = false;
-          console.warn("❌ Disconnected from TikFinity", data.disconnected);
           setTimeout(connectTikFinity, 2000);
-          sbClient.executeCodeTrigger("tikfinity.disconnected", data.disconnected);
-          break;
+        sbClient.executeCodeTrigger("tikfinity.disconnected", disconnected);
+        break;
         }
-
+          
           case "pollMessage": {
           const pollMessage = data.data;
           console.log('Poll ongoing');
