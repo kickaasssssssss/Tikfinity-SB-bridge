@@ -184,16 +184,17 @@ function connectTikFinity() {
         }
 
         case "connected": {
-          const connected = data.data;
-          console.log('Tikfinity has successfully connected to your TikTok LIVE!');
-          sbClient.executeCodeTrigger("tikfinity.connected", connected);
+          tikfinityConnected = true;
+          console.log("✅ Connected to TikFinity", data.connected);
+          sbClient.executeCodeTrigger("tikfinity.connected", data.connected);
           break;
         }
-
+          
         case "disconnected": {
-          const disconnected = data.data;
-          console.log('Oh no! Tikfinity got disconnected from your TikTok LIVE.');
-          sbClient.executeCodeTrigger("tikfinity.disconnected", disconnected);
+          tikfinityConnected = false;
+          console.warn("❌ Disconnected from TikFinity", data.disconnected);
+          setTimeout(connectTikFinity, 2000);
+          sbClient.executeCodeTrigger("tikfinity.disconnected", data.disconnected);
           break;
         }
 
