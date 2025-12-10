@@ -183,6 +183,13 @@ socket.onclose = () => {
           break;
         }
 
+        case "oecLiveShopping": {
+          const oecLiveShopping = data.data;
+          console.log('oecLiveShopping received', data);
+          sbClient.executeCodeTrigger("tikfinity.oecLiveShopping", oecLiveShopping);
+          break;
+        }
+
         case "roomPin": {
           const roomPin = data.data;
           console.log('A message has been pinned.');
